@@ -1260,3 +1260,467 @@ exports.recordCovers = function(record){
 
 }
 
+// http://viaf.org/viaf/terms#countries
+exports.recordCountries = function(record){
+
+	function resultObj(){
+
+		this.count = false
+		this.sources = false
+		this.text = false
+
+
+	}
+
+	var resultAry = []
+
+
+
+	if (record.recordData){
+		
+		if (record.recordData[0]){
+
+			if (record.recordData[0]['ns2:VIAFCluster']){
+
+				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
+					//shorten the path a litle
+					var data = record.recordData[0]['ns2:VIAFCluster'][0]
+
+
+					if (data['ns2:countries']){
+						if (data['ns2:countries'][0]){	
+
+
+
+							if (data['ns2:countries'][0]['ns2:data']){
+
+								for (var aData in data['ns2:countries'][0]['ns2:data']){
+
+									var aResultObj = new resultObj()
+
+									aData = data['ns2:countries'][0]['ns2:data'][aData]
+
+
+									if (aData['$']){
+										if (aData['$']['count']) aResultObj.count = parseInt(aData['$']['count'])
+										if (aData['$']['scaled']) aResultObj.scaled = parseInt(aData['$']['scaled'])
+									}
+
+									if (aData['ns2:text']){
+										if (aData['ns2:text'][0]) aResultObj.text = aData['ns2:text'][0]
+									}
+
+									if (aData['ns2:sources']){
+										if (aData['ns2:sources'][0]){
+											if (aData['ns2:sources'][0]['ns2:s']) aResultObj.sources = aData['ns2:sources'][0]['ns2:s']
+										}
+									}
+
+
+									resultAry.push(aResultObj)
+
+								}
+
+
+
+							}
+							
+
+						}
+					}
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	return resultAry
+
+
+}
+
+// http://viaf.org/viaf/terms#languageOfEntity
+exports.recordLanguageOfEntity = function(record){
+
+	function resultObj(){
+
+		this.sources = false
+		this.text = false
+
+
+	}
+
+	var resultAry = []
+
+
+
+	if (record.recordData){
+		
+		if (record.recordData[0]){
+
+			if (record.recordData[0]['ns2:VIAFCluster']){
+
+				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
+					//shorten the path a litle
+					var data = record.recordData[0]['ns2:VIAFCluster'][0]
+
+
+					if (data['ns2:languageOfEntity']){
+						if (data['ns2:languageOfEntity'][0]){	
+
+
+
+							if (data['ns2:languageOfEntity'][0]['ns2:data']){
+
+								for (var aData in data['ns2:languageOfEntity'][0]['ns2:data']){
+
+									var aResultObj = new resultObj()
+
+									aData = data['ns2:languageOfEntity'][0]['ns2:data'][aData]
+
+
+									if (aData['ns2:text']){
+										if (aData['ns2:text'][0]) aResultObj.text = aData['ns2:text'][0]
+									}
+
+									if (aData['ns2:sources']){
+										if (aData['ns2:sources'][0]){
+											if (aData['ns2:sources'][0]['ns2:s']) aResultObj.sources = aData['ns2:sources'][0]['ns2:s']
+										}
+									}
+
+
+									resultAry.push(aResultObj)
+
+								}
+
+
+
+							}
+							
+
+						}
+					}
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	return resultAry
+
+
+}
+
+
+
+// http://viaf.org/viaf/terms#nationalityOfEntity
+exports.recordNationalityOfEntity = function(record){
+
+	function resultObj(){
+
+		this.sources = false
+		this.text = false
+
+
+	}
+
+	var resultAry = []
+
+
+
+	if (record.recordData){
+		
+		if (record.recordData[0]){
+
+			if (record.recordData[0]['ns2:VIAFCluster']){
+
+				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
+					//shorten the path a litle
+					var data = record.recordData[0]['ns2:VIAFCluster'][0]
+
+
+					if (data['ns2:nationalityOfEntity']){
+						if (data['ns2:nationalityOfEntity'][0]){	
+
+
+
+							if (data['ns2:nationalityOfEntity'][0]['ns2:data']){
+
+								for (var aData in data['ns2:nationalityOfEntity'][0]['ns2:data']){
+
+									var aResultObj = new resultObj()
+
+									aData = data['ns2:nationalityOfEntity'][0]['ns2:data'][aData]
+
+
+									if (aData['ns2:text']){
+										if (aData['ns2:text'][0]) aResultObj.text = aData['ns2:text'][0]
+									}
+
+									if (aData['ns2:sources']){
+										if (aData['ns2:sources'][0]){
+											if (aData['ns2:sources'][0]['ns2:s']) aResultObj.sources = aData['ns2:sources'][0]['ns2:s']
+										}
+									}
+
+
+									resultAry.push(aResultObj)
+
+								}
+
+
+
+							}
+							
+
+						}
+					}
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	return resultAry
+
+
+}
+
+
+// http://viaf.org/viaf/terms#nationalityOfEntity
+exports.recordxLinks = function(record){
+
+	function resultObj(){
+
+		this.type = false
+		this.link = false
+
+
+	}
+
+	var resultAry = []
+
+
+
+	if (record.recordData){
+		
+		if (record.recordData[0]){
+
+			if (record.recordData[0]['ns2:VIAFCluster']){
+
+				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
+					//shorten the path a litle
+					var data = record.recordData[0]['ns2:VIAFCluster'][0]
+
+
+					if (data['ns2:xLinks']){
+						if (data['ns2:xLinks'][0]){	
+
+							if (data['ns2:xLinks'][0]['ns2:xLink']){
+
+								for (var aLink in data['ns2:xLinks'][0]['ns2:xLink']){
+
+									var aResultObj = new resultObj()
+
+									aLink = data['ns2:xLinks'][0]['ns2:xLink'][aLink]
+
+
+									if (aLink['_']) aResultObj.link = aLink['_']
+									
+									if (aLink['$']){
+										if (aLink['$']['type']) aResultObj.type = aLink['$']['type']	
+									} 
+
+									resultAry.push(aResultObj)
+
+								}
+
+
+
+							}
+							
+
+						}
+					}
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	return resultAry
+
+
+}
+
+// http://viaf.org/viaf/terms#titles
+exports.recordTitles = function(record){
+
+	function resultObj(){
+
+		this.sources = false
+		this.title = false
+		this.id = false
+
+
+	}
+
+	var resultAry = []
+
+
+
+	if (record.recordData){
+		
+		if (record.recordData[0]){
+
+			if (record.recordData[0]['ns2:VIAFCluster']){
+
+				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
+					//shorten the path a litle
+					var data = record.recordData[0]['ns2:VIAFCluster'][0]
+
+
+					if (data['ns2:titles']){
+						if (data['ns2:titles'][0]){	
+
+
+
+							if (data['ns2:titles'][0]['ns2:work']){
+
+
+								for (var aWork in data['ns2:titles'][0]['ns2:work']){
+
+									var aResultObj = new resultObj()
+
+									aWork = data['ns2:titles'][0]['ns2:work'][aWork]
+
+									if (aWork['$']){
+										if (aWork['$']['id']) aResultObj.id = aWork['$']['id']
+									}
+
+									if (aWork['ns2:title']){
+										if (aWork['ns2:title'][0]) aResultObj.title = aWork['ns2:title'][0]
+									}
+
+									if (aWork['ns2:sources']){
+										if (aWork['ns2:sources'][0]){
+											if (aWork['ns2:sources'][0]['ns2:s']) aResultObj.sources = aWork['ns2:sources'][0]['ns2:s']
+										}
+									}
+
+									resultAry.push(aResultObj)
+
+								}
+
+
+
+							}
+							
+
+						}
+					}
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	return resultAry
+
+
+}
+
+
+
+
+// http://viaf.org/viaf/terms#history
+exports.recordHistory = function(record){
+
+	function resultObj(){
+
+		this.recid = false
+		this.time = false
+		this.type = false
+
+
+	}
+
+	var resultAry = []
+
+
+
+	if (record.recordData){
+		
+		if (record.recordData[0]){
+
+			if (record.recordData[0]['ns2:VIAFCluster']){
+
+				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
+					//shorten the path a litle
+					var data = record.recordData[0]['ns2:VIAFCluster'][0]
+
+
+					if (data['ns2:history']){
+						if (data['ns2:history'][0]){	
+
+							if (data['ns2:history'][0]['ns2:ht']){
+
+								for (var aLink in data['ns2:history'][0]['ns2:ht']){
+
+									var aResultObj = new resultObj()
+
+									aLink = data['ns2:history'][0]['ns2:ht'][aLink]
+
+									
+									if (aLink['$']){
+										if (aLink['$']['recid']) aResultObj.recid = aLink['$']['recid']	
+										if (aLink['$']['time']) aResultObj.time = aLink['$']['time']	
+										if (aLink['$']['type']) aResultObj.type = aLink['$']['type']
+									} 
+
+									resultAry.push(aResultObj)
+
+								}
+
+
+
+							}
+							
+
+						}
+					}
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	return resultAry
+
+
+}

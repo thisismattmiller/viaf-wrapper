@@ -328,8 +328,87 @@ describe('apiProcess', function () {
 		})
 	})
 
-	
+	it('XML process - Record - Countries', function (done) {
+		apiProcess.splitSearchResults(xml, function(results){
+			var r = apiProcess.recordCountries(results.records[0])  
 
+ 			for (var x in r){
+  				x = r[x]
+  				if (x.text==='US'){
+  					x.count.should.be.above(420)
+  					x.scaled.should.be.above(7)
+  					x.sources.length.should.be.above(10)
+  					break
+  				}
+  			}
+			done()
+		})
+	})	
+
+	it('XML process - Record - languageOfEntity', function (done) {
+		apiProcess.splitSearchResults(xml, function(results){
+			var r = apiProcess.recordLanguageOfEntity(results.records[0])  
+
+ 			for (var x in r){
+  				x = r[x]
+  				if (x.text==='eng'){
+  					x.sources.length.should.be.above(2)
+  					break
+  				}
+  			}
+			done()
+		})
+	})	
+
+	it('XML process - Record - xLinks', function (done) {
+		apiProcess.splitSearchResults(xml, function(results){
+			var r = apiProcess.recordxLinks(results.records[0])  
+
+ 			for (var x in r){
+  				x = r[x]
+  				if (x.link==='http://en.wikipedia.org/wiki/Jack_Kerouac'){
+  					x.type.should.equal('WKP')
+  					break
+  				}
+  			}
+			done()
+		})
+	})	
+
+	it('XML process - Record - titles', function (done) {
+		apiProcess.splitSearchResults(xml, function(results){
+
+			var r = apiProcess.recordTitles(results.records[0])  
+
+ 			for (var x in r){
+  				x = r[x]
+  				if (x.title==='And the hippos were boiled in their tanks'){
+  					x.sources.length.should.be.above(7)
+  					x.sources.indexOf('LC').should.be.above(-1)
+  					x.id.should.equal('VIAF|310940740')
+  					break
+  				}
+  			}
+			done()
+		})
+	})	
+
+	it('XML process - Record - history', function (done) {
+		apiProcess.splitSearchResults(xml, function(results){
+
+			var r = apiProcess.recordHistory(results.records[0])  
+
+ 			for (var x in r){
+  				x = r[x]
+  				if (x.recid==='LC|n  80036674'){
+ 					x.time.should.equal('2009-03-03T12:03:29+00:00')
+ 					x.type.should.equal('add')
+  					break
+  				}
+  			}
+			done()
+		})
+	})	
 
 
 
