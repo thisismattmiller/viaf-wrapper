@@ -1,35 +1,32 @@
 {
-    "analyze": true,
-    "author": "",
-
-    "contributors": [
-        {
-            "email": "thisismattmiller@gmail.com",
-            "name": "matt miller"
-        }
-    ],
-    "dependencies": {
-        "request" : "2.55.0",
-        "xml2js"  : "0.4.8"
-
-    },
-    "devDependencies": {
-        "mocha": "2.1.0",
-        "should": "5.0.1"
-    },
-    "scripts":{
-      "test" : "mocha test"
-    },
-    "description": "",
-    "license": "MIT",
-    "name": "viaf-wrapper",
-    "preferGlobal": false,
-    "private": false,
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/thisismattmiller/viaf-wrapper.git"
-    },
-    "version": "0.0.1"
-
-
+  "analyze": true,
+  "author": "",
+  "contributors": [
+    {
+      "email": "thisismattmiller@gmail.com",
+      "name": "matt miller"
+    }
+  ],
+  "dependencies": {
+    "q": "^1.3.0",
+    "request": "2.55.0",
+    "xml2js": "0.4.8"
+  },
+  "devDependencies": {
+    "mocha": "2.1.0",
+    "should": "5.0.1"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "description": "",
+  "license": "MIT",
+  "name": "viaf-wrapper",
+  "preferGlobal": false,
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thisismattmiller/viaf-wrapper.git"
+  },
+  "version": "0.0.1"
 }

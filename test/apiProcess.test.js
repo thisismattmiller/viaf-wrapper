@@ -40,6 +40,33 @@ describe('apiProcess', function () {
 	})
 
 
+
+	it('XML process - Record - combine', function (done) {
+
+		apiProcess.splitSearchResults(xml, function(results){
+
+			var r = apiProcess.combineResults(results.records[0])
+
+			//should have all these properties
+			var props = ["viafId","nameType","primaryTopic","recordLength","birthDate","deathDate","dateType","mainHeadingsData","heading","mainHeadingEls","gender","dates","sources","x400","x500","coAuthors","publishers","recFormats","relatorCodes","iSBNs","covers","countries","languageOfEntity","nationalityOfEntity","xLinks","titles","history","titlesTop","nationalityOfEntityTop","languageOfEntityTop"]
+			for (var x in props){
+				r.should.have.property(props[x])
+			}
+			//and the other way around
+			for (var x in r){
+				props.indexOf(x).should.be.above(-1)
+			}
+			done()
+		})
+	
+
+	})
+
+
+
+
+
+
 	it('XML process - Search result - split records', function (done) {
 
 		apiProcess.splitSearchResults(xml, function(results){
@@ -252,9 +279,9 @@ describe('apiProcess', function () {
 		apiProcess.splitSearchResults(xml, function(results){
 			var r = apiProcess.recordDates(results.records[0])  
 
-			r.max.should.be.above(200)
-			r.min.should.be.above(190)
-			r['1950'].count.should.be.above(78)
+			r.dates.max.should.be.above(200)
+			r.dates.min.should.be.above(190)
+			r.dates['1950'].count.should.be.above(78)
 
 			done()
 		})

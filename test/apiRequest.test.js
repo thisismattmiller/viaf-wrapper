@@ -6,15 +6,57 @@ describe('apiRequest', function () {
 	this.timeout(25000);
 
 
+	it('search - callback', function (done) {
+		apiRequest.searchPreferredName("Jack Kerouac, 1922-1969", function(error, records){ 
+		
+			if (error){
+				throw "Error: " + error.toString()
+			}
+			records.length.should.be.above(1)			 
+			done()
+
+		})
+	})
+
+	it('search - promises', function (done) {
+		apiRequest.searchPreferredName("Jack Kerouac, 1922-1969")
+		.then(function (records) {
+			records.length.should.be.above(1)
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
 
 
-	// it('searchAny - default', function (done) {
+	it('search - callback - error', function (done) {
+		apiRequest.searchError("Jack Kerouac, 1922-1969", function(error, records){ 
+		
+			if (!error){
+				throw "Did not error out"
+			}
+			done()
 
-	// 	apiRequest.searchAny("Jack Kerouac, 1922-1969", {operator: apiRequest.ONE_OR_MORE, limit: apiRequest.LOC}, function(){done()})
+		})
+	})
 
-	// })
+	it('search - promises - error', function (done) {
+		apiRequest.searchError("Jack Kerouac, 1922-1969")
+		.then(function (records) {
+			done()
+		})
+		.fail(function (error) {
+			if (!error){
+				throw "Did not error out"
+			}
+			done()
+		})
+	})
 
 
+
+	//test the url generator
 	it('buildSearchUrl - default', function (done) {
 		var r = apiRequest.buildSearchUrl('searchAny','hithere',{})
 		r.should.equal('http://viaf.org/viaf/search?query=cql.any+all+"hithere"&sortKey=holdingscount&maximumRecords=50&httpAccept=application/xml')

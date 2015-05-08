@@ -52,6 +52,9 @@ exports.search = {
 	searchExpression :		'local.uniformTitleExpressions+{OP}+"{X}"',
 	searchWorks :			'local.uniformTitleWorks+{OP}+"{X}"',
 
+	//for testing
+	searchError:			'?ERR&OR+{OP}+"{X}"',
+
 
 	limitSourceVIAF :		"viaf",        
 	limitSourceAustralia :	"nla",    

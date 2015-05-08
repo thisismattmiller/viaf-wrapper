@@ -5,7 +5,9 @@
 
 var request   = require('request'),
 	apiConfig = require('./apiConfig'),
-	querystring = require('querystring')
+	querystring = require('querystring'),
+	apiProcess = require('./apiProcess'),
+	Q = require('q')
 
 var exports = module.exports = {}
 
@@ -57,8 +59,17 @@ exports.searchAny = function(query,options,cb){
 	exports.search('searchAny',query,options,cb)
 }
 
+exports.searchPreferredName = function(query,options,cb){
+	return exports.search('searchPreferredName',query,options,cb)
+}
+
+exports.searchError = function(query,options,cb){
+	return exports.search('searchError',query,options,cb)
+}
 
 exports.search = function(type,query,options,cb){
+
+	var deferred = Q.defer();
 
 
 	var hasQuery = (typeof query === 'string') ? true : false,
@@ -77,7 +88,7 @@ exports.search = function(type,query,options,cb){
 	//it should be empty if not passed
 	if (!hasOptions) var options = {}
 
-	if (!hasQuery) return false
+	if (!hasQuery) deferred.reject("No Query")
 
 
 	qs = exports.buildSearchUrl(type,query,options)
@@ -95,25 +106,32 @@ exports.search = function(type,query,options,cb){
 				console.error("Cannot connect to the internet")
 			}
 
-			if (cb) cb(false)
+			deferred.reject(error)     
+		}else if (response.statusCode!=200){
 
-			return false
-		}
+			deferred.reject(response.statusCode)
 
-
-
-		if (options.raw){
-			if (cb) cb(body)
 		}else{
-			if (cb) cb(data)
+
+			if (options.raw){
+				deferred.resolve(body)
+			}else{
+
+				//okay we want to process the record
+				var records = apiProcess.splitSearchResults(body, function(records){
+					deferred.resolve(records.records)
+				})
+
+			}
+
 		}
 
-		
 
 	})
-	
 
 
+	deferred.promise.nodeify(cb)
+	return deferred.promise
 }
 
 
@@ -168,6 +186,7 @@ exports.buildSearchUrl = function(type,query,options){
 	//start record
 	qs += "&" + acceptHeader
 
+	if (type==='searchError') qs = qs.replace('search?','searcherror?')
 
 	return qs
 

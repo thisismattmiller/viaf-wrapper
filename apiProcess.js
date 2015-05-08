@@ -66,6 +66,99 @@ exports.splitSearchResults = function(xml, cb){
 }
 
 
+exports.combineResults = function(record){
+
+
+	var results = {}
+
+
+	var arrayMethods = []
+
+	var objMethods = ["recordBasic","recordMainHeading","recordFixed","recordDates"]
+	var arrayMethods = ["recordSources","recordX400","recordX500","recordCoAuthors","recordPublishers","recordRecFormats","recordRelatorCodes","recordISBNs","recordCovers","recordCountries","recordLanguageOfEntity","recordNationalityOfEntity","recordxLinks","recordTitles","recordHistory"]
+
+	for (var x in objMethods){
+		var r = exports[objMethods[x]](record)
+		for (var rKey in r){
+			results[rKey] = r[rKey]
+		}
+	}
+	for (var x in arrayMethods){
+		var r = exports[arrayMethods[x]](record)		
+		if (r.length==0) r = false
+
+		//make the key based on the xml namespace
+		var newKey = arrayMethods[x].replace("record",'')		
+		newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
+
+		results[newKey] = r
+	}
+
+	//enrich some things like nationality and language
+	var count = 0
+	if (results.titles){
+		for (var t in results.titles){
+			t = results.titles[t]
+			if (t.sources.length > count) {
+				results.titlesTop = t
+				count = t.sources.length
+			}
+		}
+	}else{
+		results.titlesTop = false
+	}
+
+	count = 0
+	if (results.nationalityOfEntity){
+		for (var t in results.nationalityOfEntity){
+			t = results.nationalityOfEntity[t]
+			if (t.sources.length > count) {
+				results.nationalityOfEntityTop = t.text
+				count = t.sources.length
+			}
+		}
+	}else{
+		results.nationalityOfEntityTop = false
+	}
+
+	count = 0
+	if (results.languageOfEntity){
+		for (var t in results.languageOfEntity){
+			t = results.languageOfEntity[t]
+			if (t.sources.length > count) {
+				results.languageOfEntityTop = t.text
+				count = t.sources.length
+			}
+		}
+	}else{
+		results.languageOfEntityTop = false
+	}
+
+	return results
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //retrive the high level elements
 // http://viaf.org/viaf/terms#viafID
 // http://viaf.org/viaf/terms#nameType
@@ -910,8 +1003,7 @@ exports.recordDates = function(record){
 
 	}
 
-	return aResultObj
-
+	return { dates : aResultObj}
 
 }
 
