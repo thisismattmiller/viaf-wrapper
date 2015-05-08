@@ -42,11 +42,12 @@ describe('apiCache', function () {
 
 	it('cache - return', function () {
 		var r = apiCache.return('http://viaf.org/viaf/search?query=cql.serverChoice+all+"hithere"&sortKey=holdingscount&maximumRecords=50&httpAccept=application/xml')
-		r.value.should.equal(true)
+		r.data.value.should.equal(true)
 	})
 
 	it('cache - return false', function () {
 		var r = apiCache.return('http://nonononononononononount&maximumRecords=50&httpAccept=application/xml')
+
 		r.should.equal(false)
 	})
 
