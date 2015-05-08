@@ -27,6 +27,10 @@ exports.splitSearchResults = function(xml, cb){
 
 	}
 
+
+	//normalize the ns# bussiness going on here
+	xml = xml.replace(/<ns[0-9]+:/gmi,"<ns2:").replace(/<\/ns[0-9]+:/gmi,"</ns2:")
+
 	//convert the xml
     parser.parseString(xml, function (err, result) {
 
@@ -961,37 +965,42 @@ exports.recordDates = function(record){
 								if (data['ns2:dates'][0]['$']['max']) aResultObj.max = parseInt(data['ns2:dates'][0]['$']['max'])
 								if (data['ns2:dates'][0]['$']['min']) aResultObj.min = parseInt(data['ns2:dates'][0]['$']['min'])						
 							}
-						}
-					}
+
+							if (data['ns2:dates'][0]['ns2:date']){
+
+								for (var aDecade in data['ns2:dates'][0]['ns2:date']){
+
+									aDecade = data['ns2:dates'][0]['ns2:date'][aDecade]
 
 
-					if (data['ns2:dates'][0]['ns2:date']){
+									if (aDecade['_']){
+										//its like "195" + "0" = "1950"
+										aResultObj[aDecade['_']+'0'] = { count: false, scaled : false }
 
-						for (var aDecade in data['ns2:dates'][0]['ns2:date']){
+										if (aDecade['$']){
 
-							aDecade = data['ns2:dates'][0]['ns2:date'][aDecade]
+											if (aDecade['$']['count']) aResultObj[aDecade['_']+'0'].count = parseInt(aDecade['$']['count']) 
+											if (aDecade['$']['scaled']) aResultObj[aDecade['_']+'0'].scaled = parseFloat(aDecade['$']['scaled']) 
+
+										}
 
 
-							if (aDecade['_']){
-								//its like "195" + "0" = "1950"
-								aResultObj[aDecade['_']+'0'] = { count: false, scaled : false }
+									}
 
-								if (aDecade['$']){
-
-									if (aDecade['$']['count']) aResultObj[aDecade['_']+'0'].count = parseInt(aDecade['$']['count']) 
-									if (aDecade['$']['scaled']) aResultObj[aDecade['_']+'0'].scaled = parseFloat(aDecade['$']['scaled']) 
 
 								}
-
 
 							}
 
 
+
+
+
 						}
-
-
-
 					}
+
+
+
 
 
 

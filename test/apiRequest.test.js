@@ -5,6 +5,35 @@ describe('apiRequest', function () {
 
 	this.timeout(25000);
 
+	var randomNames = ["Trinh Guyton", "Vita Guess", "Meri Warkentin", "Fumiko Clinkscales", "Lavada Pressly", "Stanton Gilchrest", "Jeanne Rhymes", "Irvin Golson", "Delana Altizer", "Lavon Meraz", "Vikki Singleterry", "Benjamin Neiman", "Dennise Calaway", "Minda Glenn", "James Leiva", "Horace Cloninger", "Letty Odoms", "Lyndia Etherton", "Myrta Candler", "Otha Gravelle", "Alicia Musgrave", "Temple Baumgardner", "Odis Fredrick", "Rossie Shin", "Shanika Berner", "Shakita Shores", "Verda Christner", "Jenise Aigner", "Brendon Coto", "Dannielle Woltz", "Nicolette Rountree", "Effie Tarin", "Hye Stoddart", "Danilo Godley", "Adell Guadarrama", "Stacey Fillion", "Harmony Remigio", "Emiko Drumm", "Ben Krzeminski", "Lucienne Raymond", "Salley Palos", "Jovita Linn", "Dallas Goodsell", "Ashanti Chilton", "Erica Mcginness", "Harriet Sturdevant", "Aurelio Mclain", "Lilliam Boley", "Ayana Collington", "Garth Marcil", "Thersa Seppala", "Qiana Dinh", "Ed Frei", "Wilbert Ryer", "Kip Polk", "Kirstie Castorena", "Jona Dealba", "Lakeisha Kinsella", "Larry Sontag", "Millard Sugarman", "Jeramy Quiles", "Shayla Layton", "Alden Maddix", "Jacquelyn Sarabia", "Ophelia Davila", "Geraldine Breland", "Karry Dazey", "Laine Hight", "Quiana Delaughter", "Abdul Ming", "Susann Newingham", "Particia Shuler", "Rae Kirst", "Pasty Bonar", "Carola Funderburg", "Bok Carrozza", "Lloyd Dantin", "Shona Chillemi", "Marita Lopp", "Harvey Schexnayder", "Silvia Legleiter", "Charity Mapp", "Janiece Gleaves", "Jessenia Brite", "Clarisa Muck", "Nana Foraker", "Annis Raskin", "Mandi Longway", "Marlin Mah", "Sylvia Hurwitz", "Bradly Cullens", "Joya Fell", "Awilda Kuehl", "Jene Mckinnis", "Kory Boss", "Nicolasa Goodall", "Miyoko Mckinstry", "Dalila Caraveo", "Maribeth Spoor", "Jacqualine Hahn"]
+
+
+
+	//test the cache
+	it('search - cache', function (done) {
+		apiRequest.searchPreferredName("Jack Kerouac, 1922-1969")
+		.then(function (records) {
+
+			apiRequest.searchPreferredName("Jack Kerouac, 1922-1969")
+				.then(function (records) {
+
+					records.length.should.be.above(1)	
+					done()
+				})
+				.fail(function (error) {
+					done()
+				})
+
+
+
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+
+
 
 	it('search - callback', function (done) {
 		apiRequest.searchPreferredName("Jack Kerouac, 1922-1969", function(error, records){ 
@@ -12,7 +41,8 @@ describe('apiRequest', function () {
 			if (error){
 				throw "Error: " + error.toString()
 			}
-			records.length.should.be.above(1)			 
+			records.length.should.be.above(1)	
+
 			done()
 
 		})
@@ -55,6 +85,139 @@ describe('apiRequest', function () {
 	})
 
 
+	//random tests
+	//do a random name for each endpoint
+	it('random search - searchAny', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchAny(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchServerChoice', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchServerChoice(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchCorporate', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchCorporate(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchPreferredName', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchPreferredName(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+
+	it('random search - searchNames', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchNames(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+
+	it('random search - searchPersonalNames', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchPersonalNames(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchSourceRecord', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchSourceRecord(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchTitle', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchTitle(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchExpression', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchExpression(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
+
+	it('random search - searchWorks', function (done) {
+		var n = randomNames[Math.floor(Math.random() * randomNames.length) + 0]
+		apiRequest.searchWorks(n,{operator:apiRequest.ANY})
+		.then(function (records) {
+			console.log("\t",n,records.length)
+			//no idea what will it return, if it doesn't error out that is gooood
+			done()
+		})
+		.fail(function (error) {
+			done()
+		})
+	})
 
 	//test the url generator
 	it('buildSearchUrl - default', function (done) {

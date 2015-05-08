@@ -6,6 +6,7 @@
 var request   = require('request'),
 	apiConfig = require('./apiConfig'),
 	querystring = require('querystring'),
+	apiCache = require('./apiCache'),
 	apiProcess = require('./apiProcess'),
 	Q = require('q')
 
@@ -56,13 +57,50 @@ exports.XA = apiConfig.search.limitSourcexA
 
 //bindings to the search function
 exports.searchAny = function(query,options,cb){
-	exports.search('searchAny',query,options,cb)
+	return exports.search('searchAny',query,options,cb)
+}
+
+exports.searchServerChoice = function(query,options,cb){
+	return exports.search('searchServerChoice',query,options,cb)
+}
+
+exports.searchCorporate = function(query,options,cb){
+	return exports.search('searchCorporate',query,options,cb)
+}
+
+exports.searchLCCN = function(query,options,cb){
+	return exports.search('searchLCCN',query,options,cb)
 }
 
 exports.searchPreferredName = function(query,options,cb){
 	return exports.search('searchPreferredName',query,options,cb)
 }
 
+exports.searchNames = function(query,options,cb){
+	return exports.search('searchNames',query,options,cb)
+}
+
+exports.searchPersonalNames = function(query,options,cb){
+	return exports.search('searchPersonalNames',query,options,cb)
+}
+
+exports.searchSourceRecord = function(query,options,cb){
+	return exports.search('searchSourceRecord',query,options,cb)
+}
+
+exports.searchTitle = function(query,options,cb){
+	return exports.search('searchTitle',query,options,cb)
+}
+
+exports.searchExpression = function(query,options,cb){
+	return exports.search('searchExpression',query,options,cb)
+}
+
+exports.searchWorks = function(query,options,cb){
+	return exports.search('searchWorks',query,options,cb)
+}
+
+//used for testing
 exports.searchError = function(query,options,cb){
 	return exports.search('searchError',query,options,cb)
 }
@@ -93,41 +131,66 @@ exports.search = function(type,query,options,cb){
 
 	qs = exports.buildSearchUrl(type,query,options)
 
-	
-	//make the request
-	request(qs, function (error, response, body) {
-
-		var data = false
-
-		if (!body) var body = ""
-
-		if (error){
-			if (error.errno === 'ENOTFOUND'){
-				console.error("Cannot connect to the internet")
-			}
-
-			deferred.reject(error)     
-		}else if (response.statusCode!=200){
-
-			deferred.reject(response.statusCode)
-
+	//see if this query is already in the cache if so return that instead
+	var cacheResults = apiCache.return(qs)
+	if (cacheResults){
+		//yes
+		if (options.raw){
+			deferred.resolve(cacheResults.raw)
 		}else{
-
-			if (options.raw){
-				deferred.resolve(body)
-			}else{
-
-				//okay we want to process the record
-				var records = apiProcess.splitSearchResults(body, function(records){
-					deferred.resolve(records.records)
-				})
-
-			}
-
+			console.log("Using Cache")
+			//we have the cached response return it
+			deferred.resolve(cacheResults.data)
 		}
 
+	}else{
 
-	})
+		//make the request
+		request(qs, function (error, response, body) {
+
+			if (!body) var body = ""
+
+			if (error){
+				if (error.errno === 'ENOTFOUND'){
+					console.error("Cannot connect to the internet")
+				}
+
+				deferred.reject(error)     
+			}else if (response.statusCode!=200){
+
+				deferred.reject(response.statusCode)
+
+			}else{
+
+				if (options.raw){
+					deferred.resolve(body)
+				}else{
+
+					//okay we want to process the record
+					var records = apiProcess.splitSearchResults(body, function(results){
+						
+						var recordArray = []
+
+						//send each one to the processor
+						for (var x in results.records){
+							recordArray.push( apiProcess.combineResults(results.records[x]))
+						}
+						//cache it
+						apiCache.add(qs,recordArray,body)
+
+						//return it
+						deferred.resolve(recordArray)
+
+					})
+
+				}
+
+			}
+
+
+		})
+
+	}
 
 
 	deferred.promise.nodeify(cb)
@@ -192,4 +255,7 @@ exports.buildSearchUrl = function(type,query,options){
 
 
 }
+
+
+
 
