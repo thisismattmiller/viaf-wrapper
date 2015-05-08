@@ -154,12 +154,9 @@ exports.search = function(type,query,options,cb){
 				if (error.errno === 'ENOTFOUND'){
 					console.error("Cannot connect to the internet")
 				}
-
 				deferred.reject(error)     
 			}else if (response.statusCode!=200){
-
 				deferred.reject(response.statusCode)
-
 			}else{
 
 				if (options.raw){

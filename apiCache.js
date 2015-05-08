@@ -10,9 +10,8 @@ var exports = module.exports = {}
 exports.cache = { }
 
 exports.return = function (url) {
-
 	if (exports.cache[url]){
-		return exports.cache[url].data
+		return exports.cache[url]
 	}else{
 		return false
 	}
