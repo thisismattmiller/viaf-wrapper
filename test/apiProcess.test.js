@@ -19,9 +19,31 @@ describe('apiProcess', function () {
 				fs.writeFile("./test/data/search.xml", body, function(err) {
 					if(err) {
 						console.log("Could not update xml file",err)
+						done()
 					}
-					done()				
+					
+					//try to load the single viaf response for he get endpoint
+
+					request('http://viaf.org/viaf/102333412/viaf.xml', function (error, response, body) {
+						if (!error && response.statusCode == 200) {
+
+							//write out the XML
+							fs.writeFile("./test/data/viaf.xml", body, function(err) {
+								if(err) {
+									console.log("Could not update xml file",err)
+								}
+								done()
+							})
+
+						}else{
+							done()
+						}
+
+					})
 				})
+
+			}else{
+				done()
 			}
 		})
 	})
@@ -436,6 +458,39 @@ describe('apiProcess', function () {
 			done()
 		})
 	})	
+
+
+	it('XML process - single record - viaf.xml', function (done) {
+
+
+		//load the single response
+		fs.readFile('./test/data/viaf.xml', function (err, data) {
+			if (err) {
+				throw err; 
+			}
+			xml = data.toString()
+
+			apiProcess.splitSearchResults(xml, function(results){
+
+				results.records.length.should.equal(1)
+
+				var r = apiProcess.combineResults(results.records[0])
+
+				r.heading.should.equal('Austen, Jane, 1775-1817.')
+				r.nationalityOfEntityTop.should.equal('GB')
+
+
+				done()
+			})
+
+			
+		})
+
+
+
+	})	
+
+
 
 
 

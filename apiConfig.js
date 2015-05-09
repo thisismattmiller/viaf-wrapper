@@ -17,6 +17,14 @@ exports.config = {
 
 }
 
+exports.get = {
+
+	viafURL : "http://viaf.org/viaf/{X}/viaf.xml",
+	lccnURL : "http://viaf.org/viaf/lccn/{X}/viaf.xml"
+
+}
+
+
 exports.search = {
 
 	base :					"http://viaf.org/viaf/search?query=",
@@ -27,7 +35,7 @@ exports.search = {
 
 	recordsMax :			"maximumRecords={X}",
 	recordsStart :			"startRecord={X}",
-	sortKey :				"sortKey=holdingscount",
+	sortKey :				"sortKeys=holdingscount",
 
 	operatorOneOrMore :		"=",
 	operatorExact :			"exact",

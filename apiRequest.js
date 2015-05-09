@@ -16,7 +16,6 @@ var exports = module.exports = {}
 var numberOfRecords = apiConfig.search.numberOfRecords
 
 
-
 //the user can reference these search operator constants
 exports.ONE_OR_MORE = apiConfig.search.operatorOneOrMore
 exports.EXACT = apiConfig.search.operatorExact
@@ -67,7 +66,9 @@ exports.searchServerChoice = function(query,options,cb){
 exports.searchCorporate = function(query,options,cb){
 	return exports.search('searchCorporate',query,options,cb)
 }
-
+exports.searchGeographic = function(query,options,cb){
+	return exports.search('searchGeographic',query,options,cb)
+}
 exports.searchLCCN = function(query,options,cb){
 	return exports.search('searchLCCN',query,options,cb)
 }
@@ -138,7 +139,7 @@ exports.search = function(type,query,options,cb){
 		if (options.raw){
 			deferred.resolve(cacheResults.raw)
 		}else{
-			console.log("Using Cache")
+			//console.log("Using Cache")
 			//we have the cached response return it
 			deferred.resolve(cacheResults.data)
 		}
@@ -253,6 +254,77 @@ exports.buildSearchUrl = function(type,query,options){
 
 }
 
+//get the viaf id and return a processed record
+exports.getLccn = function(id,cb){
+
+	return exports.getViaf(id,cb)
+
+}
+
+//get the viaf id and return a processed record
+exports.getViaf = function(id,cb){
+
+
+	var deferred = Q.defer();
+
+	if (!id) deferred.reject("No ID")
+
+	id=id.toString()
+
+	if (id.charAt(0)=='n'){
+		var qs = apiConfig.get.lccnURL.replace("{X}",id)
+	}else{
+		var qs = apiConfig.get.viafURL.replace("{X}",id)
+	}
+
+	//make the request
+	request(qs, function (error, response, body) {
+
+		if (!body) var body = ""
+
+		if (error){
+			if (error.errno === 'ENOTFOUND'){
+				console.error("Cannot connect to the internet")
+			}
+			deferred.reject(error)     
+		}else if (response.statusCode!=200){
+			deferred.reject(response.statusCode)
+		}else{
 
 
 
+			//okay we want to process the record
+			var records = apiProcess.splitSearchResults(body, function(results){
+										
+	
+				var record = apiProcess.combineResults(results.records[0])
+
+				//return it
+				deferred.resolve(record)
+
+			})
+
+
+		}
+
+
+	})
+
+	
+
+
+	deferred.promise.nodeify(cb)
+	return deferred.promise
+
+
+
+}
+
+
+
+exports.setNumberOfRecords = function(intVal){
+	apiConfig.numberOfRecords = intVal
+}
+exports.setCacheSize= function(intVal){
+	apiConfig.cacheSize = intVal
+}

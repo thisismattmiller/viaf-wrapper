@@ -34,6 +34,8 @@ exports.splitSearchResults = function(xml, cb){
 	//convert the xml
     parser.parseString(xml, function (err, result) {
 
+    	if(err) console.log("XML Parsing error",err)
+
         if (result['searchRetrieveResponse']){
 
         	//grab the version
@@ -60,6 +62,12 @@ exports.splitSearchResults = function(xml, cb){
         	}
         	
 
+        //we use the same parse function on the search results and single record load
+        }else  if (result['ns2:VIAFCluster']){
+
+        	resultObj.total = 1
+        	resultObj.records = [result['ns2:VIAFCluster']]
+
         }
 
         if (cb) cb(resultObj)
@@ -80,6 +88,18 @@ exports.combineResults = function(record){
 
 	var objMethods = ["recordBasic","recordMainHeading","recordFixed","recordDates"]
 	var arrayMethods = ["recordSources","recordX400","recordX500","recordCoAuthors","recordPublishers","recordRecFormats","recordRelatorCodes","recordISBNs","recordCovers","recordCountries","recordLanguageOfEntity","recordNationalityOfEntity","recordxLinks","recordTitles","recordHistory"]
+
+
+	//if this is coming from the /viaf.xml endpoint it i will not have the 
+	//same structure so alter it a little so it processes correctly
+
+
+
+	if (!record.recordData){
+		var newRecord = {}
+		newRecord['recordData'] = [ {'ns2:VIAFCluster' : [record] } ]
+		record = newRecord
+	}
 
 	for (var x in objMethods){
 		var r = exports[objMethods[x]](record)
@@ -188,12 +208,15 @@ exports.recordBasic = function(record){
 	resultObj = new resultObj()
 
 	if (record.recordData){
-		
+
+
 		if (record.recordData[0]){
 
 			if (record.recordData[0]['ns2:VIAFCluster']){
 
+
 				if (record.recordData[0]['ns2:VIAFCluster'][0]){
+
 
 					//shorten the path a litle
 					var data = record.recordData[0]['ns2:VIAFCluster'][0]
