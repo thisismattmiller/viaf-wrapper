@@ -122,7 +122,7 @@ exports.search = function(type,query,options,cb){
 			var cb = options
 			hasCallback = true
 		}
-	}	
+	}
 
 	//it should be empty if not passed
 	if (!hasOptions) var options = {}
@@ -155,7 +155,7 @@ exports.search = function(type,query,options,cb){
 				if (error.errno === 'ENOTFOUND'){
 					console.error("Cannot connect to the internet")
 				}
-				deferred.reject(error)     
+				deferred.reject(error)
 			}else if (response.statusCode!=200){
 				deferred.reject(response.statusCode)
 			}else{
@@ -166,7 +166,7 @@ exports.search = function(type,query,options,cb){
 
 					//okay we want to process the record
 					var records = apiProcess.splitSearchResults(body, function(results){
-						
+
 						var recordArray = []
 
 						//send each one to the processor
@@ -216,6 +216,10 @@ exports.buildSearchUrl = function(type,query,options){
 		if (x === 'limit'){
 			limit =  options.limit
 		}
+		if (x === 'start'){
+			startRecord =  options.start
+		}
+
 
 	}
 
@@ -245,6 +249,9 @@ exports.buildSearchUrl = function(type,query,options){
 	qs += "&" + apiConfig.search.recordsMax.replace("{X}",maxRecord)
 
 	//start record
+	qs += "&" + apiConfig.search.recordsStart.replace("{X}",startRecord)
+
+	//return type
 	qs += "&" + acceptHeader
 
 	if (type==='searchError') qs = qs.replace('search?','searcherror?')
@@ -286,7 +293,7 @@ exports.getViaf = function(id,cb){
 			if (error.errno === 'ENOTFOUND'){
 				console.error("Cannot connect to the internet")
 			}
-			deferred.reject(error)     
+			deferred.reject(error)
 		}else if (response.statusCode!=200){
 			deferred.reject(response.statusCode)
 		}else{
@@ -295,8 +302,8 @@ exports.getViaf = function(id,cb){
 
 			//okay we want to process the record
 			var records = apiProcess.splitSearchResults(body, function(results){
-										
-	
+
+
 				var record = apiProcess.combineResults(results.records[0])
 
 				//return it
@@ -310,7 +317,7 @@ exports.getViaf = function(id,cb){
 
 	})
 
-	
+
 
 
 	deferred.promise.nodeify(cb)

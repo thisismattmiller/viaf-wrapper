@@ -30,6 +30,46 @@ exports.setNumberOfRecords = apiRequest.setNumberOfRecords
 exports.setCacheSize = apiRequest.setCacheSize
 
 
+//constants
+//the user can reference these search operator constants
+exports.ONE_OR_MORE = apiRequest.ONE_OR_MORE
+exports.EXACT = apiRequest.EXACT
+exports.ANY = apiRequest.ANY
+exports.ALL = apiRequest.ALL
+exports.LESS = apiRequest.LESS
+exports.LESS_EQUAL = apiRequest.LESS_EQUAL
+exports.GRATER = apiRequest.GRATER
+exports.GRATER_EQUAL = apiRequest.GRATER_EQUAL
+exports.NOT = apiRequest.NOT
+
+//and sources for limit
+exports.VIAF = apiRequest.VIAF
+exports.AUSTRALIA = apiRequest.AUSTRALIA
+exports.BELGIUM = apiRequest.BELGIUM
+exports.CANADA = apiRequest.CANADA
+exports.CZECH = apiRequest.CZECH
+exports.EGYPT = apiRequest.EGYPT
+exports.FRANCE_BNF = apiRequest.FRANCE_BNF
+exports.FRANCE_SUDOC = apiRequest.FRANCE_SUDOC
+exports.GERMANY = apiRequest.GERMANY
+exports.GETTY = apiRequest.GETTY
+exports.HUNGARY = apiRequest.HUNGARY
+exports.ISRAEL = apiRequest.ISRAEL
+exports.ITALY = apiRequest.ITALY
+exports.LOC = apiRequest.LOC
+exports.NORWAY = apiRequest.NORWAY
+exports.POLAND = apiRequest.POLAND
+exports.PORTUGAL = apiRequest.PORTUGAL
+exports.SPAIN = apiRequest.SPAIN
+exports.SWEDEN = apiRequest.SWEDEN
+exports.SWISS_NL = apiRequest.SWISS_NL
+exports.SWISS_RERO = apiRequest.SWISS_RERO
+exports.RUSSIA = apiRequest.RUSSIA
+exports.VATICAN = apiRequest.VATICAN
+exports.XA = apiRequest.XA
+
+
+
 
 if(require.main === module){
 
