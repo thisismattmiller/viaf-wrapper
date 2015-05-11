@@ -42,7 +42,7 @@ $ viaf searchPreferredName "Jack Kerouac"
 You can pipe it into jq for example:
 
 ```
-$ viaf searchPreferredName "Jack Kerouac" | jq
+$ viaf searchPreferredName "Jack Kerouac" | jq '.[0]'
 ```
 Use viaf --help for all command line options
 
