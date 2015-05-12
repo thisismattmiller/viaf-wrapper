@@ -21,6 +21,12 @@
     "test": "mocha test"
   },
   "description": "Wrapper for the VIAF XML API",
+  "keywords": [
+    "libraries",
+    "authority control",
+    "viaf",
+    "api"
+  ],
   "license": "MIT",
   "name": "viaf-wrapper",
   "preferGlobal": false,
@@ -33,5 +39,5 @@
     "viaf": "viaf.js"
   },
   "main": "viaf.js",
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
