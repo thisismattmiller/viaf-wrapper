@@ -180,6 +180,11 @@ if(require.main === module){
 
 	options.operator = operators['all']
 
+	if (typeof program.command == 'function'){
+		console.log("Please supply a command, try \"viaf --help\"")
+		process.exit(1)
+	}
+
 	if (program.command){
 
 		if (commands[program.command.toLowerCase()]){
@@ -189,6 +194,7 @@ if(require.main === module){
 			console.log("No such command, try \"viaf --help\"")
 			process.exit(1)
 		}
+
 	}
 
 	if (typeof program.query != 'string'){

@@ -1,4 +1,4 @@
-##VIAF Wrapper
+## VIAF Wrapper
 
 [![Build Status](https://travis-ci.org/thisismattmiller/viaf-wrapper.svg?branch=master)](https://travis-ci.org/thisismattmiller/viaf-wrapper)
 
@@ -48,7 +48,7 @@ Use viaf --help for all command line options
 
 ---
 
-###API
+### API
 
 Several search modes are supported by the wrapper:
 
@@ -194,12 +194,49 @@ viaf.getLccn('n80036674')
 })
 ```
 
-Here is the full layout of the records type. Search returns an array of these, get returns a single. THe property names follow the XML namespace.
+## Data
+
+Here is the full layout of the records type. Search returns an array of these, get returns a single. The property names follow the XML namespace.
 
 [https://gist.github.com/thisismattmiller/becffc95f9765e72fd94](https://gist.github.com/thisismattmiller/becffc95f9765e72fd94)
 
 Take a look at the data represented here which is all available in the wrapper:
 [http://viaf.org/viaf/27066713/](http://viaf.org/viaf/27066713/)
+
+These are the highest level values returned:
+
+```
+viafID
+primaryTopic
+nameType
+length
+birthDate
+deathDate
+dateType
+sources
+mainHeadings
+gender
+x400s
+x500s
+coauthors
+publishers
+dates (dates of publication by decade)
+RecFormats
+RelatorCodes
+ISBNs
+covers
+countries
+languageOfEntity
+nationalityOfEntity
+xLinks
+titles
+history (of the viaf cluster)
+
+//the wrapper provides these
+titlesTop      (the title with the most authorities reporting it)
+nationalityOfEntityTop  (the country that had the highest nationalityOfEntity entries)
+languageOfEntityTop    (the language that had the highest languageOfEntity entries)
+```
 
 
 

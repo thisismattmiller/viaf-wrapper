@@ -1,6 +1,6 @@
 {
   "analyze": true,
-  "author": "",
+  "author": "Matt Miller",
   "contributors": [
     {
       "email": "thisismattmiller@gmail.com",
@@ -20,7 +20,7 @@
   "scripts": {
     "test": "mocha test"
   },
-  "description": "",
+  "description": "Wrapper for the VIAF XML API",
   "license": "MIT",
   "name": "viaf-wrapper",
   "preferGlobal": false,
@@ -33,5 +33,5 @@
     "viaf": "viaf.js"
   },
   "main": "viaf.js",
-  "version": "0.0.1"
+  "version": "0.1.0"
 }
