@@ -210,9 +210,9 @@ if(require.main === module){
 			process.exit(1)
 		}
 	}
-	if (program.limit){
-		if (limits[program.limit]){
-			options.limit = limits[program.limit]
+	if (program.limit.toLowerCase()){
+		if (limits[program.limit.toLowerCase()]){
+			options.limit = limits[program.limit.toLowerCase()]
 		}else{
 			console.log("No such limit code, try \"viaf --help\"")
 			process.exit(1)
