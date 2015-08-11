@@ -5,7 +5,7 @@ var should = require('should'),
 
 describe('apiProcess', function () {
 
-	this.timeout(25000);
+	this.timeout(55000);
 
 	// try to update the record before we start
 	// if there is no internet then it doesn't matter
@@ -118,7 +118,7 @@ describe('apiProcess', function () {
 			r.viafId.should.equal('27066713')
 			r.nameType.should.equal('Personal')
 			r.primaryTopic.should.equal('http://viaf.org/viaf/27066713')
-			r.recordLength.should.equal(5785)
+			r.recordLength.should.equal(5434)
 			r.birthDate.should.equal('1922-03-12')
 			r.deathDate.should.equal('1969-10-21')
 			r.dateType.should.equal('lived')
@@ -171,11 +171,11 @@ describe('apiProcess', function () {
 
 			var r = apiProcess.recordMainHeading(results.records[0])
 
-			r.heading.should.equal('Kerouac, Jack, 1922-1969.')
+			r.heading.should.equal('Kerouac, Jack, 1922-1969')
 
 			for (var x in r.mainHeadingsData){
 				x = r.mainHeadingsData[x]
-				if (x.text === 'Kerouac, Jack, 1922-1969.'){
+				if (x.text === 'Kerouac, Jack, 1922-1969'){
 					x.source.indexOf('LC').should.be.above(-1)
 					x.source.indexOf('BNF').should.be.above(-1)
 				}
@@ -206,8 +206,8 @@ describe('apiProcess', function () {
 		apiProcess.splitSearchResults(xml, function(results){
 			var r = apiProcess.recordFixed(results.records[0])
 
-			//b === ?
-			r.gender.should.equal('b')
+			//u === ?
+			r.gender.should.equal('u')
 			done()
 		})
 	})
@@ -416,7 +416,7 @@ describe('apiProcess', function () {
  			for (var x in r){
   				x = r[x]
   				if (x.link==='http://en.wikipedia.org/wiki/Jack_Kerouac'){
-  					x.type.should.equal('WKP')
+  					x.type.should.equal('Wikipedia')
   					break
   				}
   			}
@@ -476,7 +476,7 @@ describe('apiProcess', function () {
 
 				var r = apiProcess.combineResults(results.records[0])
 
-				r.heading.should.equal('Austen, Jane, 1775-1817.')
+				r.heading.should.equal('Austen, Jane, 1775-1817')
 				r.nationalityOfEntityTop.should.equal('GB')
 
 

@@ -3,7 +3,7 @@ var should = require('should'),
 
 describe('apiRequest', function () {
 
-	this.timeout(25000);
+	this.timeout(100000);
 
 	var randomNames = ["Trinh Guyton", "Vita Guess", "Meri Warkentin", "Fumiko Clinkscales", "Lavada Pressly", "Stanton Gilchrest", "Jeanne Rhymes", "Irvin Golson", "Delana Altizer", "Lavon Meraz", "Vikki Singleterry", "Benjamin Neiman", "Dennise Calaway", "Minda Glenn", "James Leiva", "Horace Cloninger", "Letty Odoms", "Lyndia Etherton", "Myrta Candler", "Otha Gravelle", "Alicia Musgrave", "Temple Baumgardner", "Odis Fredrick", "Rossie Shin", "Shanika Berner", "Shakita Shores", "Verda Christner", "Jenise Aigner", "Brendon Coto", "Dannielle Woltz", "Nicolette Rountree", "Effie Tarin", "Hye Stoddart", "Danilo Godley", "Adell Guadarrama", "Stacey Fillion", "Harmony Remigio", "Emiko Drumm", "Ben Krzeminski", "Lucienne Raymond", "Salley Palos", "Jovita Linn", "Dallas Goodsell", "Ashanti Chilton", "Erica Mcginness", "Harriet Sturdevant", "Aurelio Mclain", "Lilliam Boley", "Ayana Collington", "Garth Marcil", "Thersa Seppala", "Qiana Dinh", "Ed Frei", "Wilbert Ryer", "Kip Polk", "Kirstie Castorena", "Jona Dealba", "Lakeisha Kinsella", "Larry Sontag", "Millard Sugarman", "Jeramy Quiles", "Shayla Layton", "Alden Maddix", "Jacquelyn Sarabia", "Ophelia Davila", "Geraldine Breland", "Karry Dazey", "Laine Hight", "Quiana Delaughter", "Abdul Ming", "Susann Newingham", "Particia Shuler", "Rae Kirst", "Pasty Bonar", "Carola Funderburg", "Bok Carrozza", "Lloyd Dantin", "Shona Chillemi", "Marita Lopp", "Harvey Schexnayder", "Silvia Legleiter", "Charity Mapp", "Janiece Gleaves", "Jessenia Brite", "Clarisa Muck", "Nana Foraker", "Annis Raskin", "Mandi Longway", "Marlin Mah", "Sylvia Hurwitz", "Bradly Cullens", "Joya Fell", "Awilda Kuehl", "Jene Mckinnis", "Kory Boss", "Nicolasa Goodall", "Miyoko Mckinstry", "Dalila Caraveo", "Maribeth Spoor", "Jacqualine Hahn"]
 
@@ -14,7 +14,7 @@ describe('apiRequest', function () {
 		apiRequest.getLccn('n79032879')
 		.then(function (record) {
 
-			record.heading.should.equal('Austen, Jane, 1775-1817.')
+			record.heading.should.equal('Austen, Jane, 1775-1817')
 			record.nationalityOfEntityTop.should.equal('GB')
 
 			done()
@@ -33,7 +33,8 @@ describe('apiRequest', function () {
 		apiRequest.getViaf('102333412')
 		.then(function (record) {
 
-			record.heading.should.equal('Austen, Jane, 1775-1817.')
+
+			record.heading.should.equal('Austen, Jane, 1775-1817')
 			record.nationalityOfEntityTop.should.equal('GB')
 
 			done()
@@ -43,6 +44,8 @@ describe('apiRequest', function () {
 			throw error
 			done()
 		})
+
+
 	})
 
 

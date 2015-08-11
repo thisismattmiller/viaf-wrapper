@@ -305,7 +305,6 @@ exports.getViaf = function(id,cb){
 
 
 				var record = apiProcess.combineResults(results.records[0])
-
 				//return it
 				deferred.resolve(record)
 
