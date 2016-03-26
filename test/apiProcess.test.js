@@ -21,7 +21,7 @@ describe('apiProcess', function () {
 						console.log("Could not update xml file",err)
 						done()
 					}
-					
+
 					//try to load the single viaf response for he get endpoint
 
 					request('http://viaf.org/viaf/102333412/viaf.xml', function (error, response, body) {
@@ -48,13 +48,13 @@ describe('apiProcess', function () {
 		})
 	})
 
-	//load the data before each test	
+	//load the data before each test
 	var xml = ""
 	beforeEach(function(done){
 		//load the test data
 		fs.readFile('./test/data/search.xml', function (err, data) {
 			if (err) {
-				throw err; 
+				throw err;
 			}
 			xml = data.toString()
 			done()
@@ -80,7 +80,7 @@ describe('apiProcess', function () {
 			}
 			done()
 		})
-	
+
 
 	})
 
@@ -95,12 +95,12 @@ describe('apiProcess', function () {
 
 			//test if we have version number and count and some records
 			results.version.should.be.above(1)
-			results.total.should.be.above(190)
+			results.total.should.be.above(150)
 			results.records.length.should.be.above(9)
 
 			done()
 		})
-	
+
 
 	})
 
@@ -118,7 +118,7 @@ describe('apiProcess', function () {
 			r.viafId.should.equal('27066713')
 			r.nameType.should.equal('Personal')
 			r.primaryTopic.should.equal('http://viaf.org/viaf/27066713')
-			r.recordLength.should.equal(5434)
+			r.recordLength.should.equal(6999)
 			r.birthDate.should.equal('1922-03-12')
 			r.deathDate.should.equal('1969-10-21')
 			r.dateType.should.equal('lived')
@@ -126,7 +126,7 @@ describe('apiProcess', function () {
 
 			done()
 		})
-	
+
 
 	})
 
@@ -156,7 +156,7 @@ describe('apiProcess', function () {
 
 			done()
 		})
-	
+
 
 	})
 
@@ -184,7 +184,7 @@ describe('apiProcess', function () {
 			for (var x in r.mainHeadingEls){
 				x = r.mainHeadingEls[x]
 				if (x.id === 'LC|n  80036674'){
-					
+
 					x.dtype.should.equal("MARC21")
 					x.ind1.should.equal("1")
 					x.ind2.should.equal(" ")
@@ -197,7 +197,7 @@ describe('apiProcess', function () {
 
 			done()
 		})
-	
+
 
 	})
 
@@ -240,21 +240,21 @@ describe('apiProcess', function () {
 	it('XML process - Record - x500s', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
 			var r = apiProcess.recordX500(results.records[0])
-  			
+
   			for (var x in r){
 
   				x = r[x]
 
-  				if (x.normalized==='cassady carolyn 1923 2013'){
+  				if (x.normalized==='hawke cassandra 1746 1813'){
 
   					x.dtype.should.equal("MARC21")
   					x.ind1.should.equal("1")
   					x.ind2.should.equal(" ")
   					x.tag.should.equal("500")
-  					x.viafLink.should.equal("93029979")  					
+  					x.viafLink.should.equal("2339560")
   					x.sources[0].should.equal('DNB')
-  					x.a.should.equal('Cassady, Carolyn')
-  					x.d.should.equal('1923-2013')
+  					x.a.should.equal('Hawke, Cassandra')
+  					x.d.should.equal('1746-1813')
   					x.e.should.equal('Beziehung familiaer')
   					break
   				}
@@ -266,7 +266,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - coAuthors', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordCoAuthors(results.records[0])  			
+			var r = apiProcess.recordCoAuthors(results.records[0])
   			for (var x in r){
   				x = r[x]
   				if (x.text==='Charters, Ann.'){
@@ -282,7 +282,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - Publishers', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordPublishers(results.records[0])  
+			var r = apiProcess.recordPublishers(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -299,7 +299,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - Dates', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordDates(results.records[0])  
+			var r = apiProcess.recordDates(results.records[0])
 
 			r.dates.max.should.be.above(200)
 			r.dates.min.should.be.above(190)
@@ -313,7 +313,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - RecFormats', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordRecFormats(results.records[0])  
+			var r = apiProcess.recordRecFormats(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -329,7 +329,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - RelatorCodes', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordRelatorCodes(results.records[0])  
+			var r = apiProcess.recordRelatorCodes(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -346,7 +346,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - ISBNs', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordISBNs(results.records[0])  
+			var r = apiProcess.recordISBNs(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -362,7 +362,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - Covers', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordCovers(results.records[0])  
+			var r = apiProcess.recordCovers(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -379,7 +379,7 @@ describe('apiProcess', function () {
 
 	it('XML process - Record - Countries', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordCountries(results.records[0])  
+			var r = apiProcess.recordCountries(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -392,11 +392,11 @@ describe('apiProcess', function () {
   			}
 			done()
 		})
-	})	
+	})
 
 	it('XML process - Record - languageOfEntity', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordLanguageOfEntity(results.records[0])  
+			var r = apiProcess.recordLanguageOfEntity(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -407,11 +407,11 @@ describe('apiProcess', function () {
   			}
 			done()
 		})
-	})	
+	})
 
 	it('XML process - Record - xLinks', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
-			var r = apiProcess.recordxLinks(results.records[0])  
+			var r = apiProcess.recordxLinks(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -422,30 +422,30 @@ describe('apiProcess', function () {
   			}
 			done()
 		})
-	})	
+	})
 
 	it('XML process - Record - titles', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
 
-			var r = apiProcess.recordTitles(results.records[0])  
+			var r = apiProcess.recordTitles(results.records[0])
 
  			for (var x in r){
   				x = r[x]
   				if (x.title==='And the hippos were boiled in their tanks'){
   					x.sources.length.should.be.above(7)
   					x.sources.indexOf('LC').should.be.above(-1)
-  					x.id.should.equal('VIAF|310940740')
+  					x.id.should.equal('VIAF|309361994')
   					break
   				}
   			}
 			done()
 		})
-	})	
+	})
 
 	it('XML process - Record - history', function (done) {
 		apiProcess.splitSearchResults(xml, function(results){
 
-			var r = apiProcess.recordHistory(results.records[0])  
+			var r = apiProcess.recordHistory(results.records[0])
 
  			for (var x in r){
   				x = r[x]
@@ -457,7 +457,7 @@ describe('apiProcess', function () {
   			}
 			done()
 		})
-	})	
+	})
 
 
 	it('XML process - single record - viaf.xml', function (done) {
@@ -466,7 +466,7 @@ describe('apiProcess', function () {
 		//load the single response
 		fs.readFile('./test/data/viaf.xml', function (err, data) {
 			if (err) {
-				throw err; 
+				throw err;
 			}
 			xml = data.toString()
 
@@ -483,12 +483,12 @@ describe('apiProcess', function () {
 				done()
 			})
 
-			
+
 		})
 
 
 
-	})	
+	})
 
 
 
