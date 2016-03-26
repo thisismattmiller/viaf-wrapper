@@ -210,7 +210,7 @@ if(require.main === module){
 			process.exit(1)
 		}
 	}
-	if (program.limit.toLowerCase()){
+	if (program.limit && program.limit.toLowerCase()){
 		if (limits[program.limit.toLowerCase()]){
 			options.limit = limits[program.limit.toLowerCase()]
 		}else{
